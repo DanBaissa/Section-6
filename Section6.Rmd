@@ -1,0 +1,116 @@
+---
+title: 'Education, Employment and US Presidential Elections'
+output:
+  pdf_document: default
+  html_document: default
+---
+
+<style type="text/css">
+    ol { list-style-type: lower-alpha; }
+</style>
+
+# Introduction
+
+We analyze returns from the 2012 and 2016 elections in order to understand the social and demographic trends that may have contributed to Donald Trump's victory in 2016. 
+We will first examine how Republican vote share at the county level has changed from 2012 to 2016. 
+Then, we will look at four variables that were prominent in the discourse around the election -- race, education, unemployment, and immigration -- to see how well they predict GOP electoral gains at the county level.
+
+We will be working with the data set `uselection.csv` which has one observation per county and contains the following variables (note that some counties including those of Alaska are missing from the data):
+
+-------------------------------------------------------------------------------------------
+Name                Description
+------------------- ------------------------------------------------------------------------
+`FIPS`   			      FIPS code (unique county identifier)
+
+`state`    			    State abbreviation
+
+`county`   			    County name
+
+`votes_dem_12`     	Number of votes cast for Democratic candidate, 2012 election
+
+`votes_gop_12`     	Number of votes cast for Republican candidate, 2012 election
+
+`votes_total_12`    Total number of votes cast in 2012 election
+
+`votes_dem_16`     	Number of votes cast for Democratic candidate, 2016 election
+
+`votes_gop_16`     	Number of votes cast for Republican candidate, 2016 election
+
+`votes_total_16`    Total number of votes cast in 2016 election
+
+`pct_for_born15`    Percent of county's population that is "foreign born" according to the U.S. Census, 
+                    meaning anyone who is not a U.S. citizen at birth (measured over 2011-2015)
+
+`pct_bach_deg15`    Percent of county population holding a Bachelor's degree or above (2011-2015)
+
+`pct_non_white15`   Percent of county population that is not white (2011-2015)
+
+`pct_unemp12`       Percent of county population that is unemployed, BLS estimates (average, Jan-Oct 2012)
+
+`pct_unemp16`       Percent of county population that is unemployed, BLS estimates (average, Jan-Oct 2016)
+----------------------------------------------------------------------------------------------------------
+
+## Question 1
+
+For this section, we are interested in whether areas with greater education had historically (2012 and 2016) received fewer Republican votes in the presidential elections. We will need to start by creating a variable that captures the GOP percentage vote share in the 2012 and 2016 elections.
+
+Create the following new columns:
+
+- `gop_vs_12`: compute the Republican vote share as a percentage of total votes in 2012.
+- `gop_vs_16`: compute the Republican vote share as a percentage of total votes in 2016.
+
+Then generate two scatter plots, one for each election. Put election proportion on the y-axis and the percentage of people with a college degree and above `pct_bach_deg15` on the x-axis. This education data is from 2015, but we will use it as an approximation for both years.
+
+Is there a trend?
+
+
+
+
+
+## Question 2
+
+Run a linear regression with `gop_vs_12` as your outcome variable and `pct_bach_deg15` as your predictor. Save the output as `fit_1`
+
+Repeat this process for 2016 and save that output to `fit_2`
+
+Interpret the results of both models. 
+
+
+
+## Question 3
+
+Some researchers argue that greater unemployment results in greater turnout against the party in power. `pct_unemp12` and `pct_unemp16` represent the percentage of unemployed people in a county for 2012 and 2016. Let's add that 2012 rate to the 2012 model and the 2016 rate to the 2016 model and then save them as `fit_3` and `fit_4` 
+
+Now let's reinterpret the results. Do they change? Make a note of the intercept. Do these values make sense?
+
+
+
+## Question 4
+
+Since the linear model is 
+$$
+\hat{y} = \beta_{intercept}+\beta_1x_1 +...+ \beta_nx_n
+$$
+we can use the regression coefficients to estimate y for values of x. This means we can write an equation that would allow us to know each estimate of y for a value of `pct_bach_deg15` and value of `pct_unemp16`. 
+
+What is the GOP vote percentage when `pct_bach_deg15` = 20 and `pct_unemp16` = 2 for `fit_4`?
+
+
+
+
+## Question 5
+
+Which model best explains the variation in GOP vote share? Do any have an R^2 greater than 0.5?
+
+## Question 6
+
+Try including other variables. Can you generate a better R-squared than the models we have created so far?
+
+
+## Question 7
+
+In class, we have learned that least squares regression (LS or OLS) results in having the errors canceling out, resulting in a mean of the residuals (errors) equal to 0. Let's use `fit_4` to find the residuals' mean and histogram them. 
+
+Hint: You will want to use the broom library and the variable name you want is `.resid`
+
+
